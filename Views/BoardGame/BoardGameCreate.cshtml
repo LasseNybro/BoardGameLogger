@@ -1,0 +1,19 @@
+﻿@model BoardGame
+
+<h3>Add a new board game</h3>
+
+<div>
+    <form method="post">
+        <label asp-for="Name">Name: </label>
+        <input asp-for="Name" />
+        <label asp-for="Genre">Genre: </label>
+        <select asp-for="Genre" asp-items="@Html.GetEnumSelectList<GenreType>()" ></select>
+        <label asp-for="MinPlayers">Number of Players: </label>
+        <input asp-for="MinPlayers" />
+        <label asp-for="MaxPlayers"> - </label>
+        <input asp-for="MaxPlayers" />
+        <label asp-for="Description">Description: </label>
+        <input asp-for="Description" />
+        <input type="submit" name="Add" value="Add" />
+    </form>
+</div>

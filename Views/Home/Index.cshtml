@@ -1,7 +1,31 @@
-﻿@{
+﻿@model IEnumerable<BoardGame>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
+<div>
+    <h3>List of all board games</h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Genre</th>
+                <th>Number of Players</th>
+            </tr>
+        </thead>
+        @foreach (BoardGame bg in Model)
+        {
+            <tr>
+                <td><a href="BoardGame/Get/@bg.Id">@bg.Name</a></td>
+                <td>@bg.Genre.ToString()</td>
+                <td>@bg.MinPlayers - @bg.MaxPlayers</td>
+            </tr>
+        }
+    </table>
+    <a href="BoardGame/Create">Add a board game</a>
+</div>
+<!--
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">
     <ol class="carousel-indicators">
         <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
@@ -92,3 +116,4 @@
         </ul>
     </div>
 </div>
+-->
