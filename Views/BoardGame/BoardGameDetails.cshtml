@@ -2,12 +2,25 @@
 
 <div>
     <div>
-        Name: @Model.Name
-        Genre: @Model.Genre.ToString()
-        Players: @Model.MinPlayers - @Model.MaxPlayers
-        Description: @Model.Description
+        <h3>@Model.Name</h3>
+        <div>Genre: @Model.Genre</div>
+        <div>Players: @Model.MinPlayers - @Model.MaxPlayers</div>
+        <div>Description: @Model.Description</div>
+    </div>
+    <div>
+        <a class="btn btn-default" asp-controller="BoardGame" asp-action="Edit" asp-route-id="@Model.Id">Edit</a>
+        <a class="btn btn-default" asp-controller="BoardGame" asp-action="Delete" asp-route-id="@Model.Id">Delete</a>
+        <a class="btn btn-default" asp-controller="BoardGame" asp-action="CreateSession" asp-route-id="@Model.Id">Add a session</a>
     </div>
 </div>
 <div>
-    <!--List all sessions of this particular game-->
+    @if(Model.Sessions != null){
+        foreach (Session s in Model.Sessions)
+        {
+        <div>
+            <div>@s.Date.ToString()</div>
+            <div>@s.Description</div>
+        </div>
+        }
+    }
 </div>

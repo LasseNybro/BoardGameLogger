@@ -1,35 +1,36 @@
 ﻿@model BoardGame
 
-<h3>Add a new board game</h3>
+<h3>Edit @Model.Name</h3>
 
 <div>
     <form method="post" class="form-inline">
         <div class="form-row align-items-center">
+            <input type="hidden" asp-for="Id" />
             <div class="col-auto">
                 <label asp-for="Name">Name: </label>
-                <input class="form-control" asp-for="Name" />
+                <input class="form-control" asp-for="Name" value="@Model.Name" />
             </div>
         </div>
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label asp-for="Genre">Genre: </label>
-                <select class="form-control" id="exampleFormControlSelect1" asp-for="Genre" asp-items="@Html.GetEnumSelectList<GenreType>()"></select>
+                <select class="form-control" id="exampleFormControlSelect1" asp-for="Genre" asp-items="@Html.GetEnumSelectList<GenreType>()" value="@Model.Genre"></select>
             </div>
         </div>
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label asp-for="MinPlayers">Number of Players: </label>
-                <input class="form-control" asp-for="MinPlayers" />
+                <input class="form-control" asp-for="MinPlayers" value="@Model.MinPlayers" />
                 <label asp-for="MaxPlayers"> - </label>
-                <input class="form-control" asp-for="MaxPlayers" />
+                <input class="form-control" asp-for="MaxPlayers" value="@Model.MaxPlayers" />
             </div>
         </div>
         <div class="form-row align-items-center">
             <div class="col-auto">
                 <label asp-for="Description">Description: </label>
-                <input class="form-control" asp-for="Description" />
+                <input class="form-control" asp-for="Description" value="@Model.Description" />
             </div>
         </div>
-            <input class="btn btn-primary" type="submit" name="Add" value="Add" />
-</form>
+        <input class="btn btn-primary" type="submit" name="Edit" value="Edit" />
+    </form>
 </div>

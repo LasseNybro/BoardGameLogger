@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using BoardGameLogger.Models;
-using BoardGameLogger.Data;
+using BoardGameLogger.Services;
 
 namespace BoardGameLogger.Controllers
 {
@@ -17,9 +13,10 @@ namespace BoardGameLogger.Controllers
         {
             _boardGameData = boardGameData;
         }
+        [HttpGet]
         public IActionResult Index()
         {
-            var model = _boardGameData.getAll();
+            var model = _boardGameData.GetAll();
             return View(model);
         }
 
@@ -46,6 +43,13 @@ namespace BoardGameLogger.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        //A Search function for board games on the main page
+        [HttpPost]
+        public IActionResult Index(GenreType genre, string name)
+        {
+            var model = _boardGameData.GetAllGenreName(genre, name);
+            return View("Index", model);
         }
     }
 }

@@ -4,14 +4,16 @@ using BoardGameLogger.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace BoardGameLogger.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20191117231812_initial")]
+    partial class initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -25,8 +27,7 @@ namespace BoardGameLogger.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description")
-                        .IsRequired();
+                    b.Property<string>("Description");
 
                     b.Property<int>("Genre");
 
@@ -34,8 +35,7 @@ namespace BoardGameLogger.Data.Migrations
 
                     b.Property<int>("MinPlayers");
 
-                    b.Property<string>("Name")
-                        .IsRequired();
+                    b.Property<string>("Name");
 
                     b.HasKey("Id");
 
@@ -48,7 +48,7 @@ namespace BoardGameLogger.Data.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("BoardGameId");
+                    b.Property<int?>("BoardGamePlayedId");
 
                     b.Property<DateTime>("Date");
 
@@ -56,7 +56,7 @@ namespace BoardGameLogger.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("BoardGameId");
+                    b.HasIndex("BoardGamePlayedId");
 
                     b.ToTable("Sessions");
                 });
@@ -228,10 +228,9 @@ namespace BoardGameLogger.Data.Migrations
 
             modelBuilder.Entity("BoardGameLogger.Models.Session", b =>
                 {
-                    b.HasOne("BoardGameLogger.Models.BoardGame")
+                    b.HasOne("BoardGameLogger.Models.BoardGame", "BoardGamePlayed")
                         .WithMany("Sessions")
-                        .HasForeignKey("BoardGameId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("BoardGamePlayedId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 using BoardGameLogger.Models;
 
-namespace BoardGameLogger.Data
+namespace BoardGameLogger.Services
 {
     public class InMemoryBoardGameData : IBoardGameData
     {
@@ -71,22 +69,53 @@ namespace BoardGameLogger.Data
             };
             _BoardGameStorage = BoardGameStorage;
         }
-        public BoardGame addBoardGame(BoardGame boardGame)
+        public BoardGame CreateBoardGame(BoardGame boardGame)
         {
             int id = _BoardGameStorage.Max(b => b.Id)+1;
             boardGame.Id = id;
             _BoardGameStorage.Add(boardGame);
             return boardGame;
         }
-
-        public BoardGame get(int id)
+        public BoardGame Get(int id)
         {
             return _BoardGameStorage.FirstOrDefault(b => b.Id==id);
         }
 
-        public IEnumerable<BoardGame> getAll()
+        public IEnumerable<BoardGame> GetAll()
         {
             return _BoardGameStorage.OrderBy(b => b.Name);
+        }
+
+        public IEnumerable<BoardGame> GetAllGenreName(GenreType genre, string name)
+        {
+            if(genre == GenreType.None && string.IsNullOrWhiteSpace(name))
+            {
+                return GetAll();
+            }
+            if (genre == GenreType.None)
+            {
+                return _BoardGameStorage.FindAll(b => b.Name == name).OrderBy(g => g.Name);
+            }
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                return _BoardGameStorage.FindAll(b => b.Genre == genre);
+            }
+            return _BoardGameStorage.FindAll(b => b.Name == name && b.Genre == genre).OrderBy(g => g.Name);
+        }
+        public BoardGame EditBoardGame(BoardGame boardGame)
+        {
+            BoardGame old = Get(boardGame.Id);
+            old.Name = boardGame.Name;
+            old.MinPlayers = boardGame.MinPlayers;
+            old.MaxPlayers = boardGame.MaxPlayers;
+            old.Genre = boardGame.Genre;
+            old.Sessions = boardGame.Sessions;
+            return old;
+        }
+
+        public void DeleteBoardGame(BoardGame boardGame)
+        {
+            throw new System.NotImplementedException();
         }
     }
 }

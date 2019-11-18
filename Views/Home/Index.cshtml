@@ -3,27 +3,37 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
+    <div><!--Get the search to work by passing along the search parameters succesfully-->
+        <h3>List of board games</h3>
+        <form method="post" class="form-inline">
+            <div class="col-xs-3">
+                <input class="form-control" placeholder="Search" type="search" name="name"/>
+            </div>
+            <select class="form-control" asp-items="@Html.GetEnumSelectList<GenreType>()" name="genre"></select>
+            <input type="submit" class="btn btn-default" value="Search" name="search">
+        </form>
+    </div>
 <div>
-    <h3>List of all board games</h3>
-    <table>
-        <thead>
-            <tr>
-                <th>Name</th>
-                <th>Genre</th>
-                <th>Number of Players</th>
-            </tr>
-        </thead>
-        @foreach (BoardGame bg in Model)
-        {
-            <tr>
-                <td><a href="BoardGame/Get/@bg.Id">@bg.Name</a></td>
-                <td>@bg.Genre.ToString()</td>
-                <td>@bg.MinPlayers - @bg.MaxPlayers</td>
-            </tr>
-        }
-    </table>
-    <a href="BoardGame/Create">Add a board game</a>
+    <div>
+        <table class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Genre</th>
+                    <th scope="col">Number of Players</th>
+                </tr>
+            </thead>
+            @foreach (BoardGame bg in Model)
+            {
+                <tr>
+                    <td><a href="BoardGame/Get/@bg.Id">@bg.Name</a></td>
+                    <td>@Enum.GetName(typeof(GenreType), bg.Genre)</td>
+                    <td>@bg.MinPlayers - @bg.MaxPlayers</td>
+                </tr>
+            }
+        </table>
+        <a class="btn btn-default" asp-controller="BoardGame" asp-action="Create">Add a board game</a>
+    </div>
 </div>
 <!--
 <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="6000">

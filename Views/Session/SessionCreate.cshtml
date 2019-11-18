@@ -1,0 +1,21 @@
+﻿@model SessionEdit
+
+<h3>Add a new @ViewBag("BoardGame") session</h3>
+
+<div>
+    <form method="post" class="form-inline" asp-route="Session/Create">
+        <div class="form-row align-items-center">
+            <div class="col-auto">
+                <label asp-for="Date">Date: </label>
+                <input class="form-control" asp-for="Date" />
+            </div>
+        </div>
+        <div class="form-row align-items-center">
+            <div class="col-auto"> 
+                <label asp-for="Description">Description: </label>
+                <input class="form-control" asp-for="Description" />
+            </div>
+        </div>
+        <input class="btn btn-primary" type="submit" name="Add" value="Add" />
+    </form>
+</div>
